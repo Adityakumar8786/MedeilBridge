@@ -1,0 +1,17 @@
+/* frontend/src/index.css - simple medical theme */
+:root {
+  --primary: #1769aa; /* blue */
+  --accent: #2e7d32;  /* green */
+  --bg: #f7fbfd;
+  --card: #ffffff;
+  --muted: #666;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color:#222; }
+.header { display:flex; justify-content:space-between; align-items:center; padding:14px 20px; background:linear-gradient(90deg,#fff,#f0f6fb); border-bottom:1px solid #e6eef6;}
+.logo { font-weight:700; color:var(--primary); }
+.nav a { margin-left:14px; text-decoration:none; color:var(--primary); font-weight:600; }
+.main { padding:28px; max-width:1000px; margin:0 auto; }
+.card { background:var(--card); padding:18px; border-radius:8px; box-shadow:0 4px 12px rgba(20,40,60,0.05); }
+.btn { background:var(--accent); color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; }
+.small { color:var(--muted); font-size:0.9rem; }
