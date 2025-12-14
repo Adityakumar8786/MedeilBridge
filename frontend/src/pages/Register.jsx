@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import { API_BASE } from "../api/api";
 
 
 export default function Register() {
@@ -6,7 +7,6 @@ export default function Register() {
     const [name,setname] = useState('');
     const [age,setAge] = useState('');
     const[result,setResult] = useState(null) ; 
-    const API = 'http://localhost:5000/api' ; 
 
 
     async function handleSubmit(e){
@@ -14,7 +14,7 @@ e.preventDefault() ;
 setResult(null) ; 
 
 try{
-const res = await fetch(`${API}/register`,{
+const res = await fetch(`${API_BASE}/register`,{
 method :'POST' ,
 headers :{'Content-Type':'application/json'},
 body :JSON.stringify({name,age})
