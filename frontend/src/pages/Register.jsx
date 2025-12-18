@@ -1,55 +1,85 @@
-import React,{useState} from 'react';
+import React, { useState } from "react";
 import { API_BASE } from "../api/api";
 
-
 export default function Register() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [result, setResult] = useState(null);
 
-    const [name,setname] = useState('');
-    const [age,setAge] = useState('');
-    const[result,setResult] = useState(null) ; 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setResult(null);
 
+    try {
+      const res = await fetch(`${API_BASE}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, age, gender }),
+      });
 
-    async function handleSubmit(e){
-e.preventDefault() ; 
-setResult(null) ; 
+      const data = await res.json();
 
-try{
-const res = await fetch(`${API_BASE}/register`,{
-method :'POST' ,
-headers :{'Content-Type':'application/json'},
-body :JSON.stringify({name,age})
-});
+      if (!res.ok) {
+        setResult({ error: data.message });
+        return;
+      }
 
-const data = await res.json();
-setResult(data) ; 
-}catch(err){
-setResult({error : 'Network error'}) ; 
-}
+      setResult(data);
+    } catch {
+      setResult({ error: "Network error" });
     }
+  }
 
   return (
-    <div className="card">
-      <h2>Register as Patient</h2>
-      <form onSubmit={handleSubmit} style={{ marginTop: 12 }}>
-        <div style={{ marginBottom: 8 }}>
-          <label>Name</label><br/>
-          <input value={name} onChange={(e)=>setname(e.target.value)} placeholder="Your name" />
-        </div>
-        <div style={{ marginBottom: 8 }}>
-          <label>Age</label><br/>
-          <input value={age} onChange={e => setAge(e.target.value)} placeholder="Age" />
-        </div>
-        <button className="btn" type="submit">Register</button>
+    <div style={{ maxWidth: 400, margin: "auto" }}>
+      <h2>Patient Registration</h2>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <br /><br />
+
+        <input
+          placeholder="Phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <br /><br />
+
+        <input
+          placeholder="Age"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+        <br /><br />
+
+        <select value={gender} onChange={(e) => setGender(e.target.value)}>
+          <option value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+        <br /><br />
+
+        <button type="submit">Register</button>
       </form>
 
       {result && (
-        <div style={{ marginTop: 18 }}>
-            {result.error ? (<div className="small">Error: {result.error}</div>)
-        :(<div>
-              <div><strong>Secret ID:</strong> {result.secretId}</div>
-              <div className="small">Save this Secret ID to access your reports.</div>
-            </div>)}
-            </div>
+        <div style={{ marginTop: 20 }}>
+          {result.error ? (
+            <p style={{ color: "red" }}>{result.error}</p>
+          ) : (
+            <>
+              <p><b>Registered Successfully</b></p>
+              <p><b>Secret ID:</b> {result.secretId}</p>
+            </>
+          )}
+        </div>
       )}
     </div>
   );
