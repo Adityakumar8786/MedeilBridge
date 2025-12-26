@@ -8,6 +8,9 @@ const session = require("express-session");
 const {MongoStore} = require("connect-mongo");
 const cookieParser = require("cookie-parser");
 const flash = require("express-flash");
+const passport = require("passport");
+require("./config/passport")(passport);
+
 
 const app = express();                 // 3
 const PORT = process.env.PORT || 5000; // 4
@@ -18,7 +21,6 @@ app.use(express.json());               // 6
 
 
 
-connectDB();
 
 
 app.use(session({
@@ -39,6 +41,10 @@ app.use(session({
 
  app.use(flash()) ; 
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+connectDB();
 
 app.get('/api/ping', (req, res) => {   // 7
     req.session.visits = (req.session.visits||0)+1 ;
