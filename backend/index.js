@@ -5,18 +5,19 @@ const cors = require('cors');          // 2
 const registerRoutes = require("./routes/registerRoutes"); 
 const connectDB = require("./config/db");
 const session = require("express-session");
-const {MongoStore} = require("connect-mongo");
+const{ MongoStore }= require("connect-mongo");
 const cookieParser = require("cookie-parser");
 const flash = require("express-flash");
 const passport = require("passport");
 require("./config/passport")(passport);
-
+const authenticationroute = require("./routes/authRoutes") ; 
 
 const app = express();                 // 3
 const PORT = process.env.PORT || 5000; // 4
 
 app.use(cors());                       // 5
 app.use(express.json());               // 6
+app.use(express.urlencoded({ extended: true }));
 
 
 
@@ -64,7 +65,7 @@ req.flash("error", "Invalid password");
 })
 
 app.use("/api",registerRoutes);
-
+app.use("/api/auth",authenticationroute) ; 
 
 app.listen(PORT, () => {               
   console.log(`Backend running on http://localhost:${PORT}`);
