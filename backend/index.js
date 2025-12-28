@@ -11,6 +11,7 @@ const flash = require("express-flash");
 const passport = require("passport");
 require("./config/passport")(passport);
 const authenticationroute = require("./routes/authRoutes") ; 
+const statsRoutes = require("./routes/statsRoutes");
 
 const app = express();                 // 3
 const PORT = process.env.PORT || 5000; // 4
@@ -66,6 +67,7 @@ req.flash("error", "Invalid password");
 
 app.use("/api",registerRoutes);
 app.use("/api/auth",authenticationroute) ; 
+app.use("/api", statsRoutes);
 
 app.listen(PORT, () => {               
   console.log(`Backend running on http://localhost:${PORT}`);
