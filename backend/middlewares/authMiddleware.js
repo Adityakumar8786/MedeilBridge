@@ -1,3 +1,5 @@
+//authMiddlewares.js (for easy identification created by my own ) ; 
+
 exports.isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();

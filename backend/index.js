@@ -1,7 +1,7 @@
 // backend/index.js
 
-const express = require('express');    // 1
-const cors = require('cors');          // 2
+const express = require('express');    
+const cors = require('cors');          
 const registerRoutes = require("./routes/registerRoutes"); 
 const connectDB = require("./config/db");
 const session = require("express-session");
@@ -12,12 +12,17 @@ const passport = require("passport");
 require("./config/passport")(passport);
 const authenticationroute = require("./routes/authRoutes") ; 
 const statsRoutes = require("./routes/statsRoutes");
+const userRoutes = require("./routes/userRoutes");
 
-const app = express();                 // 3
-const PORT = process.env.PORT || 5000; // 4
+const app = express();                 
+const PORT = process.env.PORT || 5000; 
 
-app.use(cors());                       // 5
-app.use(express.json());               // 6
+app.use(cors({
+  origin: 'http://localhost:5173',       
+  credentials: true                    
+}));
+                      
+app.use(express.json());               
 app.use(express.urlencoded({ extended: true }));
 
 
@@ -68,6 +73,7 @@ req.flash("error", "Invalid password");
 app.use("/api",registerRoutes);
 app.use("/api/auth",authenticationroute) ; 
 app.use("/api", statsRoutes);
+app.use("/api", userRoutes);
 
 app.listen(PORT, () => {               
   console.log(`Backend running on http://localhost:${PORT}`);

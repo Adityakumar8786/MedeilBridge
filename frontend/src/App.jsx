@@ -1,37 +1,36 @@
-import React from "react";
-import { Link,Route,Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Doctor from "./pages/Doctor";
-import Register from "./pages/Register";
-import Patient from "./pages/Patient";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Dashboard from "./pages/DashBoard";
+import Login from "./pages/Login";
+import Unauthorized from "./pages/Unauthorized";
 import Govt from "./pages/Govt";
-import './index.css';
 
-export default function App(){
-  return(
-    <div>
-    <header>
-      <div className='logo'>Health Hackers</div>
+function App() {
+  return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
 
-      <nav className="nav">
-<Link to='/'>Home</Link>
-<Link to='/register'>Register</Link>
-<Link to='/patient'>Patient</Link>
-<Link to='/doctor'>Doctor</Link>
-<Link to='/govt'>Govt</Link>
-      </nav>
-    </header>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
-    <main className='main'>
-<Routes>
-<Route path='/' element={<Home/>}/>
-<Route path='/register' element={<Register/>}/>
-<Route path='/patient' element={<Patient/>}/>
-<Route path='/doctor' element={<Doctor/>}/>
-<Route path='/govt' element={<Govt/>}/>
-</Routes>
-    </main>
+        <Route
+          path="/govt"
+          element={
+            <ProtectedRoute role="govt">
+              <Govt />
+            </ProtectedRoute>
+          }
+        />
 
-    </div>
-  )
+        <Route path="/unauthorized" element={<Unauthorized />} />
+      </Routes>
+  );
 }
+
+export default App;

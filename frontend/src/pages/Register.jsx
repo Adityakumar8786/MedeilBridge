@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { API_BASE } from "../api/api";
+import api from "../api/api";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -13,22 +13,18 @@ export default function Register() {
     setResult(null);
 
     try {
-      const res = await fetch(`${API_BASE}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, age, gender }),
+      const res = await api.post("/register", {
+        name,
+        phone,
+        age,
+        gender
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setResult({ error: data.message });
-        return;
-      }
-
-      setResult(data);
-    } catch {
-      setResult({ error: "Network error" });
+      setResult(res.data);
+    } catch (err) {
+      setResult({
+        error: err.response?.data?.message || "Network error"
+      });
     }
   }
 
@@ -37,28 +33,16 @@ export default function Register() {
       <h2>Patient Registration</h2>
 
       <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
         <br /><br />
 
-        <input
-          placeholder="Phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
+        <input placeholder="Phone" value={phone} onChange={e => setPhone(e.target.value)} />
         <br /><br />
 
-        <input
-          placeholder="Age"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
+        <input placeholder="Age" value={age} onChange={e => setAge(e.target.value)} />
         <br /><br />
 
-        <select value={gender} onChange={(e) => setGender(e.target.value)}>
+        <select value={gender} onChange={e => setGender(e.target.value)}>
           <option value="">Select Gender</option>
           <option>Male</option>
           <option>Female</option>

@@ -1,3 +1,5 @@
+//User.js.js (for easy identification created by my own ) ; 
+
 const  mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
