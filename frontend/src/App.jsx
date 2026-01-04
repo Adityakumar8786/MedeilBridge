@@ -19,11 +19,20 @@ function App() {
           }
         />
 
+<Route
+  path="/admin"
+  element={
+    <ProtectedRoute role="admin">
+      <Dashboard />
+    </ProtectedRoute>
+  }
+/>
+
         <Route
           path="/govt"
           element={
             <ProtectedRoute role="govt">
-              <Govt />
+              <Dashboard />
             </ProtectedRoute>
           }
         />

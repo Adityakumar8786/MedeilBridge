@@ -23,6 +23,13 @@ api.get("/me")
       .finally(() => setLoading(false));
   }, []);
 
+
+  const logout = async () => {
+    await api.post("/auth/logout");
+    setUser(null);
+  };
+
+  
   return (
     <AuthContext.Provider value={{ user, loading }}>
       {children}
