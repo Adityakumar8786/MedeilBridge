@@ -14,7 +14,25 @@ function App() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/login" element={<Login />} />
+
+      <Route
+  path="/login"
+  element={
+    <PublicRoute>
+      <Login />
+    </PublicRoute>
+  }
+/>
+
+<Route
+  path="/"
+  element={
+    <ProtectedRoute>
+      <RoleRedirect />
+    </ProtectedRoute>
+  }
+/>
+
       <Route path="/unauthorized" element={<Unauthorized />} />
 
       {/* Admin */}
