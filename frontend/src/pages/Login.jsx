@@ -2,7 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { AuthContext } from "../context/AuthContext";
-import { getDashboardByRole } from "../utils/roleRedirect";
+import { getDashboardByRole } from "../utils/getDashboardByRole";
+
 
 export default function Login() {
   const { user, loading } = useContext(AuthContext);
@@ -11,7 +12,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // 🔒 Block logged-in users from seeing login page
+ 
   useEffect(() => {
     if (!loading && user) {
       navigate(getDashboardByRole(user.role), { replace: true });

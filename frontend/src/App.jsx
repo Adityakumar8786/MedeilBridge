@@ -2,9 +2,10 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
-
+import PublicRoute from "./routes/PublicRoute";
 import Login from "./pages/Login";
 import Unauthorized from "./pages/Unauthorized";
+import RoleRedirect from "./utils/RoleRedirect";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import DoctorDashboard from "./pages/DoctorDashboard";
