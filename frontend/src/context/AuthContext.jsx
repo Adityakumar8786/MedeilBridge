@@ -10,16 +10,14 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get("/me")
-      .then((res) => {
+    api.get("/me")
+      .then(res => {
         if (res.data.loggedIn) {
-          setUser(res.data.user); // must include role
+          setUser(res.data.user);
         } else {
           setUser(null);
         }
       })
-      .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
 
@@ -29,14 +27,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        isAuthenticated: !!user,
-        logout,
-      }}
-    >
+    <AuthContext.Provider value={{ user, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );
