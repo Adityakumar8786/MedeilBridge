@@ -1,74 +1,80 @@
-// src/App.jsx
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Unauthorized from "./pages/Unauthorized";
-import RoleRedirect from "./utils/RoleRedirect";
-
-import AdminDashboard from "./pages/AdminDashboard";
+import Home from "./pages/Home";
+import Govt from "./pages/Govt";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import UserDashboard from "./pages/UserDashboard";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
-    <Routes>
-      {/* Public */}
-
-      <Route
-  path="/login"
+    <>
+      <NavBar />
+      <Routes>
+        <Route
+  path="/"
   element={
     <PublicRoute>
-      <Login />
+      <Home />
     </PublicRoute>
   }
 />
 
-<Route
-  path="/"
-  element={
-    <ProtectedRoute>
-      <RoleRedirect />
-    </ProtectedRoute>
-  }
-/>
 
-      <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
-      {/* Admin */}
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute allowedRoles={["admin"]}>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
 
-      {/* Doctor */}
-      <Route
-        path="/doctor"
-        element={
-          <ProtectedRoute allowedRoles={["doctor"]}>
-            <DoctorDashboard />
-          </ProtectedRoute>
-        }
-      />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
-      {/* User */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={["user"]}>
-            <UserDashboard />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/govt"
+          element={
+            <ProtectedRoute allowedRoles={["govt"]}>
+              <Govt />
+            </ProtectedRoute>
+          }
+        />
 
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
-    </Routes>
+        <Route
+          path="/doctor"
+          element={
+            <ProtectedRoute allowedRoles={["doctor"]}>
+              <DoctorDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/patient"
+          element={
+            <ProtectedRoute allowedRoles={["patient"]}>
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }
 

@@ -54,17 +54,18 @@ export default function Register() {
       </form>
 
       {result && (
-        <div style={{ marginTop: 20 }}>
-          {result.error ? (
-            <p style={{ color: "red" }}>{result.error}</p>
-          ) : (
-            <>
-              <p><b>Registered Successfully</b></p>
-              <p><b>Secret ID:</b> {result.secretId}</p>
-            </>
-          )}
-        </div>
-      )}
+  <div style={{ marginTop: 20 }}>
+    {result.error ? (
+      <p style={{ color: "red" }}>{result.error}</p>
+    ) : (
+      <>
+        <p><b>Registered Successfully</b></p>
+        <p>Your registration is complete. Please provide samples to medical staff.</p>
+      </>
+    )}
+  </div>
+)}
+
     </div>
   );
 }

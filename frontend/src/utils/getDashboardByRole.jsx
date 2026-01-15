@@ -1,12 +1,6 @@
 export function getDashboardByRole(role) {
-  switch (role) {
-    case "admin":
-      return "/admin";
-    case "doctor":
-      return "/doctor";
-    case "user":
-      return "/dashboard";
-    default:
-      return "/unauthorized";
-  }
+  if (role === "govt") return "/govt";
+  if (role === "doctor") return "/doctor";
+  if (role === "patient") return "/patient";
+  return "/unauthorized";
 }

@@ -1,21 +1,22 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
-export default function UserDashboard() {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-  };
+export default function DoctorDashboard() {
+  const { user } = useContext(AuthContext);
 
   return (
-    <div>
-      <h1>Doctor Dashboard</h1>
-      <p>{user.email}</p>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="main-container">
+      <div className="dashboard-card">
+        <h1 className="dashboard-header">Doctor Dashboard</h1>
+
+        <p className="welcome-text">
+          Dr. {user.name || user.email.split("@")[0]}
+          <br />
+          Role: <strong>{user.role}</strong>
+        </p>
+
+        <button className="action-btn">View Patient Records</button>
+      </div>
     </div>
   );
 }

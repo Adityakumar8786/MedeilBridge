@@ -9,7 +9,7 @@ export default function PublicRoute({ children }) {
   if (loading) return <p>Loading...</p>;
 
   if (user) {
-    if (user.role === "admin") return <Navigate to="/admin" />;
+    if (user.role === "govt") return <Navigate to="/govt" />;
     if (user.role === "doctor") return <Navigate to="/doctor" />;
     return <Navigate to="/dashboard" />;
   }

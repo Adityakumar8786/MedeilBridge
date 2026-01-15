@@ -10,16 +10,16 @@ export default function Dashboard() {
   const logout = async () => {
     await api.post("/auth/logout");
     navigate("/login");
-    window.location.reload(); // force auth reset
+    window.location.reload();
   };
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Email: {user.email}</p>
-      <p>Role: {user.role}</p>
-
-      <button onClick={logout}>Logout</button>
+    <div className="main-container">
+      <div className="dashboard-card">
+        <h1 className="dashboard-header">Dashboard</h1>
+        <p className="welcome-text">{user.email}</p>
+        <button className="logout-btn" onClick={logout}>Logout</button>
+      </div>
     </div>
   );
 }

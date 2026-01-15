@@ -1,9 +1,11 @@
-// src/context/AuthContext.jsx
-
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import api from "../api/api";
 
 export const AuthContext = createContext(null);
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -14,20 +16,24 @@ export function AuthProvider({ children }) {
       .then(res => {
         if (res.data.loggedIn) {
           setUser(res.data.user);
-        } else {
-          setUser(null);
         }
       })
+      .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
 
   const logout = async () => {
-    await api.post("/auth/logout");
-    setUser(null);
+    try {
+      await api.post("/auth/logout");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    } finally {
+      setUser(null);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout }}>
+    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );
